@@ -49,6 +49,15 @@ function App() {
       {/* <Upload  />
       <SearchNearby  /> */}
       <Entry_page />
+      {/* <div class="d-inline-flex gap-2 mb-5">
+      <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
+        Call to action
+        <svg class="bi ms-2" width="24" height="24"><use xlink:href="#arrow-right-short"></use></svg>
+      </button>
+      <button class="btn btn-outline-secondary btn-lg px-4 rounded-pill" type="button">
+        Secondary link
+      </button>
+    </div> */}
     <Router>
       {/* yo */}
       <div className="container" style={{background:'white'}}>
