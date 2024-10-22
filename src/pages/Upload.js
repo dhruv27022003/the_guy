@@ -1,17 +1,17 @@
-
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../redux/userSlice';
 import Carousel from '../components/Carousel';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import MapComponent from './MapComponent';
+
 function Upload() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [category, setCategory] = useState('');
   const [location, setLocation] = useState({ latitude: '', longitude: '' });
-  const users = useSelector((state) => state.user.users); // Access users from Redux  
+  const users = useSelector((state) => state.user.users);
   const dispatch = useDispatch();
 
   const handleLocation = () => {
@@ -30,23 +30,21 @@ function Upload() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = { name, email, phone, category, location };
-    dispatch(addUser(userData)); // Dispatch the addUser action
+    dispatch(addUser(userData));
     setName('');
     setEmail('');
     setPhone('');
     setCategory('');
     setLocation({ latitude: '', longitude: '' });
-    console.log("-----",users);
-
   };
 
   return (
     <div>
-          <Carousel />
-          {/* <Suggestions  /> */}
-          <br/><br/>
+      <Carousel />
+      <br /><br />
       <h2 className="h3 fw-normal text-center">User Registration</h2>
-      <form onSubmit={handleSubmit} className="bg-dark text-light  rounded">
+      <form onSubmit={handleSubmit} className="text-light rounded">
+        {/* Form fields */}
         <div className="form-floating mb-3">
           <input
             type="text"
@@ -67,7 +65,6 @@ function Upload() {
             placeholder="name@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            // required
           />
           <label htmlFor="floatingEmail" className="text-dark">Email</label>
         </div>
@@ -79,22 +76,22 @@ function Upload() {
             placeholder="Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            // required
           />
           <label htmlFor="floatingPhone" className="text-dark">Phone Number</label>
         </div>
         <div className="form-floating mb-3">
-          <input
-            type="text"
+          <select
             className="form-control form-control-dark"
             id="floatingCategory"
-            placeholder="Category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            // required
-          />
-          <label htmlFor="floatingCategory" className="text-dark">Category</label>
+          >
+            <option value="">Select Category</option>
+            {/* Add your category options */}
+          </select>
         </div>
+
+        {/* Location section */}
         <div className="form-floating mb-3">
           <input
             type="text"
@@ -117,18 +114,23 @@ function Upload() {
           />
           <label htmlFor="longitude" className="text-dark">Longitude</label>
         </div>
+
+        {/* Button to get location */}
         <div className="mb-3">
           <button type="button" className="btn btn-secondary w-100 py-2" onClick={handleLocation}>
             Get Current Location
           </button>
         </div>
+
+        {/* Map displaying user's location */}
+        <MapComponent latitude={location.latitude} longitude={location.longitude} />
+
+        {/* Submit button */}
         <button className="btn btn-primary w-100 py-2" type="submit">
           Register
         </button>
         <p className="mt-5 mb-3 text-light">© 2024–2025</p>
       </form>
-    <button onClick= {() => window.location.href = '/ss'} 
-    >Go to search nearby</button>
     </div>
   );
 }
